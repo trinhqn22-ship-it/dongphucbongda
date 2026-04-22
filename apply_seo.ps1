@@ -1,0 +1,63 @@
+﻿$files = Get-ChildItem -Filter *.html | Where-Object { $_.Name -notmatch "index|blog|san-bong" }
+
+$keywords = @(
+    @{k="may áo bóng đá Quy Nhơn"; l="Quy Nhơn"},
+    @{k="in áo bóng đá Quy Nhơn"; l="Quy Nhơn"},
+    @{k="đồng phục bóng đá Bình Định"; l="Bình Định"},
+    @{k="may áo bóng đá Pleiku"; l="Pleiku"},
+    @{k="in áo bóng đá Gia Lai"; l="Gia Lai"},
+    @{k="may áo bóng đá Đà Nẵng"; l="Đà Nẵng"},
+    @{k="in áo bóng đá Quảng Ngãi"; l="Quảng Ngãi"},
+    @{k="may áo bóng đá Tuy Hòa"; l="Tuy Hòa"},
+    @{k="in áo bóng đá Nha Trang"; l="Nha Trang"},
+    @{k="may áo bóng đá Phan Thiết"; l="Phan Thiết"}
+)
+
+$i = 0
+foreach ($f in $files) {
+    if ($f.Name -match "index.html" -or $f.Name -match "blog.html") { continue }
+    $c = Get-Content $f.FullName -Raw -Encoding UTF8
+    
+    $kw1 = $keywords[$i % $keywords.Count]
+    $i++
+    $kw2 = $keywords[$i % $keywords.Count]
+    $i++
+    
+    $loc1 = $kw1.l
+    $word1 = $kw1.k
+    $word2 = $kw2.k
+    
+    $c = $c -replace '<title>(.*?) \| Đồng Phục Bóng Đá</title>', ("<title>`$1 | $word1 | Đồng Phục Bóng Đá</title>")
+    
+    $c = $c -replace '<meta name="description" content="([^"]+)">', ("<meta name=`"description`" content=`"`$1 Dịch vụ $word1 chuyên nghiệp, uy tín.`">")
+    
+    $seoBlock = @"
+      <div style="margin: 40px auto; max-width: 700px; padding: 25px; background: rgba(0,255,135,0.05); border-radius: 12px; border: 1px dashed var(--primary-color);">
+         <h3 style="font-size: 22px; margin-bottom: 15px; color: var(--primary-color);">Dịch Vụ $word1 Và Đặt Đo Đội Nhóm</h3>
+         <p style="color: var(--text-muted); font-size: 16px; line-height: 1.8; margin-bottom: 0;">
+           Tại khu vực $loc1 và các tỉnh miền Trung, nhu cầu <a href="index.html#san-pham" style="color: #fff; text-decoration: underline; font-weight: bold;">$word2</a> đang tăng mạnh, đặc biệt với các đội bóng phong trào, công ty và nhóm bạn bè. Xưởng may của chúng tôi tự hào cung cấp dịch vụ thiết kế, in ấn và giao hàng tận nơi với chất lượng vượt trội.
+         </p>
+      </div>
+"@
+    
+    if (-not ($c -match "Dịch Vụ $word1")) {
+        $c = $c -replace '<div class="article-details">', ("<div class=`"article-details`">`n$seoBlock")
+    }
+    
+    $c = $c -replace '<img id="main-img" ([^>]*) alt="([^"]+)">', ("<img id=`"main-img`" `$1 alt=`"`$2 - thiết kế tại $loc1`">")
+    
+    $c = $c -replace '(<img src="[^"]+" style="width: 100%; border-radius: 12px; box-shadow[^>]+)>', ("`$1 alt=`"đồng phục bóng đá team công ty $loc1`">")
+
+    Set-Content -Path $f.FullName -Value $c -Encoding UTF8
+    Write-Host "Processed $($f.Name) with keywords: $word1, $word2"
+}
+
+$indexFile = "index.html"
+$cIndex = Get-Content $indexFile -Raw -Encoding UTF8
+if (-not ($cIndex -match "Chúng tôi nhận may in áo bóng đá theo yêu cầu tại Quy Nhơn")) {
+    $snippet = "<p style=`"margin-top: 15px; color: var(--primary-color); font-weight: bold; font-size: 16px;`">⭐ Chúng tôi nhận may in áo bóng đá theo yêu cầu tại Quy Nhơn, Gia Lai, Đà Nẵng và các tỉnh miền Trung…</p>"
+    $cIndex = $cIndex -replace '(<p>Những mẫu thiết kế đặc sắc chuyên nghiệp từ các thương hiệu hàng đầu</p>)', ("`$1`n        $snippet")
+    Set-Content -Path $indexFile -Value $cIndex -Encoding UTF8
+    Write-Host "Updated index.html SEO"
+}
+

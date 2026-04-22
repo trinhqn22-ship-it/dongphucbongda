@@ -1,0 +1,16 @@
+$files = Get-ChildItem -Filter *.html
+foreach ($f in $files) {
+    $c = Get-Content $f.FullName -Raw -Encoding UTF8
+    $c = $c.Replace("VIP_CHAT_LIEU", "🌟 Chất Liệu Vải Cao Cấp")
+    $c = $c.Replace("VIP_CHAT_LIEU_DESC", "Sản phẩm được chau chuốt từ những sợi vải chất lượng nhất, mang lại độ thoáng khí mềm mịn và độ co giãn tối đa cho người chơi thể thao.")
+    $c = $c.Replace("VIP_BANG_SIZE", "📏 Bảng Size Chuẩn")
+    $c = $c.Replace("VIP_BANG_SIZE_DESC", "Form dáng thiết kế theo số đo chuẩn của người Việt, giúp bạn dễ dàng chọn được kích cỡ vừa vặn nhất.")
+    $c = $c.Replace("GIA_TIEN", "180.000đ - 250.000đ")
+    $c = $c.Replace("XEM_CHI_TIET", "Xem Chi Tiết")
+    $c = $c.Replace("BO_SUU_TAP", "Bộ Sưu Tập <span>Đồng Phục Bóng Đá 2026</span>")
+    $c = $c.Replace("BO_SUU_TAP_DESC", "Những mẫu thiết kế đặc sắc chuyên nghiệp từ các thương hiệu hàng đầu")
+    $c = $c -replace 'M.u <strong>(.*?)</strong> n.i b.t', 'Mẫu <strong>$1</strong> nổi bật'
+    $c = $c.Replace("Dong Phuc Bong Da", "Đồng Phục Bóng Đá")
+    Set-Content -Path $f.FullName -Value $c -Encoding UTF8
+}
+Write-Host "Translation complete!"

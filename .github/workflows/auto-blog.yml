@@ -1,0 +1,47 @@
+name: Auto Blog Sports News
+
+on:
+  schedule:
+    # Chạy mỗi ngày vào lúc 6:30 sáng giờ Việt Nam (23:30 UTC hôm trước)
+    - cron: '30 23 * * *'
+  # Cho phép chạy thủ công khi cần
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-sports-news:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4 feedparser
+          if [ -f auto-blog/requirements.txt ]; then pip install -r auto-blog/requirements.txt; fi
+
+      - name: Generate daily sports news
+        run: |
+          cd auto-blog
+          python generate_sports_news.py
+
+      - name: Commit & Push new post
+        run: |
+          git config user.name "Đồng Phục Bóng Đá Auto Bot"
+          git config user.email "bot@dongphucbongda.com"
+          git add -A
+          git diff --staged --quiet && echo "Nothing to commit" && exit 0
+          TIMESTAMP=$(TZ='Asia/Ho_Chi_Minh' date '+%d-%m-%Y %H:%M')
+          git commit -m "Auto blog: Cập nhật tin thể thao [${TIMESTAMP} VN]"
+          git push
