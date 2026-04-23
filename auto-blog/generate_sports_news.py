@@ -44,15 +44,18 @@ def generate_blog_html(news_items):
     html_items = []
     for item in news_items:
         html = f"""
-        <div class="blog-card">
+        <article class="blog-card">
           <img src="{item['image']}" alt="{item['title']}">
           <div class="blog-content">
-            <div class="blog-date">{item['published']}</div>
+            <div class="blog-date">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+              {item['published']}
+            </div>
             <h3>{item['title']}</h3>
             <p>{item['summary']}</p>
-            <a href="{item['link']}" target="_blank" class="read-more">Đọc Tiếp <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></a>
+            <a href="{item['link']}" target="_blank" class="read-more-btn">Đọc Tiếp <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg></a>
           </div>
-        </div>
+        </article>
         """
         html_items.append(html)
     return "\n".join(html_items)
@@ -65,8 +68,8 @@ def update_file(filepath, new_html):
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
     
-    # We will replace the content inside <div class="grid" id="blog-grid">
-    start_tag = '<div class="grid" id="blog-grid">'
+    # We will replace the content inside <div class="blog-grid" id="blog-grid">
+    start_tag = '<div class="blog-grid" id="blog-grid">'
     end_tag = '</div>'
     
     start_idx = content.find(start_tag)

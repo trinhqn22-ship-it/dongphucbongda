@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
   <script>if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') { location.replace(window.location.href.replace('http:', 'https:')); }</script>
@@ -9,6 +9,311 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    /* OVERRIDE CHO TRANG BLOG (THEO HỆ MÀU MRS LINH: Xanh bích, Xanh navy, Trắng) */
+    :root {
+      --bg-color: #f8fafc;
+      --surface-color: #ffffff;
+      --primary-color: #1d4ed8; /* Xanh bích / Royal Blue */
+      --primary-hover: #1e3a8a;
+      --secondary-color: #0f172a; /* Xanh navy */
+      --text-main: #334155;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+    }
+    
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+    }
+    
+    /* Header Override */
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .logo { color: var(--secondary-color); }
+    .logo span { color: var(--primary-color); }
+    .nav-links a { color: var(--text-main); font-weight: 600; }
+    .nav-links a:hover, .nav-links a.active { color: var(--primary-color); }
+    .nav-links a::after { background-color: var(--primary-color); }
+    .header-cta .btn {
+      background: var(--primary-color);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(29, 78, 216, 0.3);
+    }
+    .header-cta .btn:hover {
+      background: var(--primary-hover);
+      color: #ffffff;
+      box-shadow: 0 6px 20px rgba(29, 78, 216, 0.4);
+    }
+
+    /* Mobile Menu fix */
+    @media (max-width: 768px) {
+      .header-cta { display: block; }
+      .header-cta .btn { padding: 8px 16px; font-size: 12px; }
+    }
+    
+    /* HERO BANNER */
+    .blog-hero {
+      margin-top: 80px; /* Offset for fixed header */
+      position: relative;
+      background-image: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('https://images.unsplash.com/photo-1518605368461-1e1e38ce8058?q=80&w=1920&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      padding: 120px 20px;
+      text-align: center;
+      color: #ffffff;
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .blog-hero-content {
+      max-width: 800px;
+      animation: fadeIn 1s ease-out;
+    }
+    .blog-hero h1 {
+      font-size: 52px;
+      font-weight: 800;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      line-height: 1.2;
+    }
+    .blog-hero p {
+      font-size: 20px;
+      margin-bottom: 35px;
+      font-weight: 500;
+      color: #e2e8f0;
+    }
+    .blog-hero .btn-hero {
+      display: inline-block;
+      background: var(--primary-color);
+      color: #ffffff;
+      padding: 16px 40px;
+      border-radius: 30px;
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 20px rgba(29, 78, 216, 0.4);
+    }
+    .blog-hero .btn-hero:hover {
+      background: #ffffff;
+      color: var(--primary-color);
+      transform: translateY(-3px);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .blog-hero { padding: 80px 20px; min-height: 300px; }
+      .blog-hero h1 { font-size: 32px; margin-bottom: 15px; }
+      .blog-hero p { font-size: 16px; margin-bottom: 25px; }
+    }
+
+    /* BLOG SECTION */
+    .blog-section {
+      padding: 80px 0;
+      background: var(--bg-color);
+    }
+    .section-title {
+      text-align: center;
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--secondary-color);
+      margin-bottom: 50px;
+      text-transform: uppercase;
+    }
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+    }
+    .blog-card {
+      background: var(--surface-color);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border-color);
+    }
+    .blog-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(29, 78, 216, 0.15);
+      border-color: rgba(29, 78, 216, 0.3);
+    }
+    .blog-card img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .blog-content {
+      padding: 24px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .blog-date {
+      color: var(--primary-color);
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .blog-content h3 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--secondary-color);
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    .blog-content p {
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      line-height: 1.6;
+      flex-grow: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .read-more-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary-color);
+      font-weight: 600;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+    .read-more-btn:hover {
+      color: var(--primary-hover);
+      gap: 12px;
+    }
+
+    /* CTA SECTION BÁN HÀNG */
+    .cta-section {
+      background: var(--secondary-color);
+      padding: 80px 20px;
+      text-align: center;
+      color: #ffffff;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%; width: 200%; height: 200%;
+      background: radial-gradient(circle at center, rgba(29,78,216,0.2) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .cta-content {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .cta-content h2 {
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+    }
+    .cta-features {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+    .cta-feature-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: 500;
+      background: rgba(255,255,255,0.05);
+      padding: 10px 20px;
+      border-radius: 30px;
+    }
+    .cta-feature-item svg {
+      color: var(--primary-color);
+      width: 24px;
+      height: 24px;
+    }
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .btn-zalo {
+      background: #0068ff; /* Zalo blue */
+      color: #fff;
+      padding: 16px 32px;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 104, 255, 0.4);
+    }
+    .btn-zalo:hover {
+      background: #0056d6;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 104, 255, 0.6);
+    }
+    .btn-design {
+      background: #ffffff;
+      color: var(--secondary-color);
+      padding: 16px 32px;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+    .btn-design:hover {
+      background: var(--primary-color);
+      color: #ffffff;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(29, 78, 216, 0.4);
+    }
+
+    @media (max-width: 768px) {
+      .cta-content h2 { font-size: 28px; }
+      .cta-feature-item { font-size: 16px; padding: 8px 16px; }
+      .cta-buttons { flex-direction: column; width: 100%; max-width: 300px; margin: 0 auto; }
+      .btn-zalo, .btn-design { width: 100%; justify-content: center; }
+    }
+
+    /* FOOTER OVERRIDE */
+    footer {
+      background: #020617; /* Very dark navy */
+      border-top: none;
+    }
+    .footer-logo { color: #ffffff; }
+    .footer-title { color: #ffffff; }
+    .footer-desc, .footer-bottom, .footer-links a { color: #94a3b8; }
+    .footer-links a:hover { color: var(--primary-color); }
+  </style>
 </head>
 <body>
 
@@ -31,79 +336,94 @@
     </div>
   </header>
 
-  <!-- PAGE HEADER -->
-  <section class="hero" style="min-height: 40vh; padding: 120px 0 60px; background: none;">
-    <div class="container text-center">
-      <div class="section-header">
-        <h1 style="font-size: 48px; font-weight: 800; margin-bottom: 20px; text-transform: uppercase;">Tin Tức <span style="color: var(--primary-color);">Bóng Đá</span></h1>
-        <p style="font-size: 18px; color: var(--text-muted); max-width: 800px; margin: 0 auto;">Cập nhật tin tức tổng hợp 24h từ các trang thể thao uy tín hàng đầu: VnExpress, Tuổi Trẻ, Tiền Phong, Bóng Đá Plus. Bản tin tự động ra mắt mỗi 6:30 Sáng (Giờ Việt Nam).</p>
+  <!-- PHẦN 2: HERO BANNER (Tách biệt hoàn toàn) -->
+  <section class="blog-hero">
+    <div class="blog-hero-content">
+      <h1>Đồng Phục Bóng Đá Thiết Kế Theo Yêu Cầu</h1>
+      <p>Nhận may từ 5 bộ – Thiết kế miễn phí – In logo, tên, số sắc nét</p>
+      <a href="index.html#san-pham" class="btn-hero">Đặt Áo Ngay</a>
+    </div>
+  </section>
+
+  <!-- PHẦN 3 & 4: DANH SÁCH BÀI VIẾT TỐI ƯU -->
+  <section class="blog-section">
+    <div class="container">
+      <h2 class="section-title">Tin Tức Bóng Đá</h2>
+      
+      <div class="blog-grid" id="blog-grid">
+        <!-- Card 1 -->
+        <article class="blog-card">
+          <img src="https://images.unsplash.com/photo-1518605368461-1e1e38ce8058?q=80&w=800&auto=format&fit=crop" alt="Mẫu áo bóng đá thiết kế đẹp nhất">
+          <div class="blog-content">
+            <div class="blog-date">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+              Hôm nay, 06:30 AM
+            </div>
+            <h3>Top 10 Mẫu Áo Bóng Đá Thiết Kế Đẹp Nhất Mùa Giải 2026</h3>
+            <p>Khám phá những mẫu áo bóng đá có thiết kế độc quyền, chất liệu vải Thái xịn đang làm mưa làm gió trong cộng đồng phủi.</p>
+            <a href="#" class="read-more-btn">Đọc Tiếp <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg></a>
+          </div>
+        </article>
+        
+        <!-- Card 2 -->
+        <article class="blog-card">
+          <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=800&auto=format&fit=crop" alt="Chất liệu vải may áo bóng đá">
+          <div class="blog-content">
+            <div class="blog-date">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+              Hôm qua, 06:30 AM
+            </div>
+            <h3>Bí Quyết Chọn Vải May Áo Bóng Đá Thoáng Mát, Thấm Hút Tốt</h3>
+            <p>Làm sao để chọn được loại vải may đồng phục đá banh vừa bền bỉ vừa mang lại cảm giác thoải mái trên sân? Tìm hiểu ngay.</p>
+            <a href="#" class="read-more-btn">Đọc Tiếp <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg></a>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="blog-card">
+          <img src="https://images.unsplash.com/photo-1431324155629-1a6d0a11f4d5?q=80&w=800&auto=format&fit=crop" alt="Công nghệ in áo bóng đá">
+          <div class="blog-content">
+            <div class="blog-date">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+              Hôm kia, 06:30 AM
+            </div>
+            <h3>Công Nghệ In Chuyển Nhiệt Áo Bóng Đá: Bền Màu, Không Bong Tróc</h3>
+            <p>Tìm hiểu về công nghệ in áo bóng đá tiên tiến nhất hiện nay, đảm bảo logo và số áo luôn sắc nét sau hàng trăm lần giặt.</p>
+            <a href="#" class="read-more-btn">Đọc Tiếp <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg></a>
+          </div>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- BLOG LIST -->
-  <section class="section" style="padding-top: 0;">
-    <div class="container">
-      <div class="grid" id="blog-grid">
-
-        <div class="blog-card">
-          <img src="https://vcdn1-thethao.vnecdn.net/2026/04/23/wet5vk6movlrteanvx44xqnolu-177-2036-6951-1776906569.jpg?w=1200&amp;h=0&amp;q=100&amp;dpr=1&amp;fit=crop&amp;s=9c2BkAbcfwkd2zFYD1xJoQ" alt="Alcaraz: 'Tôi muốn đứng dậy mạnh mẽ hơn bao giờ hết'">
-          <div class="blog-content">
-            <div class="blog-date">23/04/2026, 06:26 AM</div>
-            <h3>Alcaraz: 'Tôi muốn đứng dậy mạnh mẽ hơn bao giờ hết'</h3>
-            <p>Tay vợt số hai thế giới Carlos Alcaraz hy vọng sớm trở lại sân đấu, sau khi buộc phải rút khỏi Madrid Mở rộng vì chấn thương cổ tay....</p>
-            <a href="https://vnexpress.net/alcaraz-toi-muon-dung-day-manh-me-hon-bao-gio-het-5065982.html" target="_blank" class="read-more">Đọc Tiếp <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></a>
-          </div>
+  <!-- PHẦN 5: CTA BÁN HÀNG DƯỚI BLOG -->
+  <section class="cta-section">
+    <div class="cta-content">
+      <h2>Đặt Đồng Phục Bóng Đá Theo Yêu Cầu</h2>
+      
+      <div class="cta-features">
+        <div class="cta-feature-item">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
+          Nhận may từ 5 bộ
         </div>
-        
-
-        <div class="blog-card">
-          <img src="https://vcdn1-thethao.vnecdn.net/2026/04/23/eb0a1833fc1142f4baf15ee89d592f-6145-9721-1776907581.png?w=1200&amp;h=0&amp;q=100&amp;dpr=1&amp;fit=crop&amp;s=zmYOOwXLVPOCjN1DoJl0Lw" alt="Trùm hệ thống web lậu bóng đá bị phạt hơn 10 triệu USD">
-          <div class="blog-content">
-            <div class="blog-date">23/04/2026, 06:26 AM</div>
-            <h3>Trùm hệ thống web lậu bóng đá bị phạt hơn 10 triệu USD</h3>
-            <p>Một ông trùm cầm đầu đường dây phát trực tuyến (livestream) thể thao bất hợp pháp vừa bị tuyên phạt 10,2 triệu USD và nhận án tù 23 tháng sau khi cuộc...</p>
-            <a href="https://vnexpress.net/trum-he-thong-web-lau-bong-da-bi-phat-hon-10-trieu-usd-5065990.html" target="_blank" class="read-more">Đọc Tiếp <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></a>
-          </div>
+        <div class="cta-feature-item">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
+          Thiết kế 3D miễn phí
         </div>
-        
-
-        <div class="blog-card">
-          <img src="https://cdn2.tuoitre.vn/thumb_w/1200/471584752817336320/2026/4/23/trong-dai-long-an-17769172590701071076623-72-0-670-956-crop-1776917357597691496435.jpg" alt="Bóng đá Long An có định đoạt được số phận?">
-          <div class="blog-content">
-            <div class="blog-date">23/04/2026, 06:27 AM</div>
-            <h3>Bóng đá Long An có định đoạt được số phận?</h3>
-            <p>CLB bóng đá Long An đứng trước trận "chung kết ngược" - nơi mà nếu thắng thì khả năng trụ hạng rất cao, nhưng nếu thua sẽ tạo nên bước ngoặt ở Giải hạ...</p>
-            <a href="https://tuoitre.vn/bong-da-long-an-co-dinh-doat-duoc-so-phan-20260423110938185.htm" target="_blank" class="read-more">Đọc Tiếp <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></a>
-          </div>
+        <div class="cta-feature-item">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
+          In logo, tên, số sắc nét
         </div>
-        
       </div>
-            <h3>Khởi động mùa giải 2026: Những kỳ vọng mới từ bóng đá Việt Nam</h3>
-            <p>Tổng hợp từ báo: VnExpress. Với sự thay đổi về quy chế giải và dàn cầu thủ ngoại, mùa giải mới hứa hẹn mang lại...</p>
-            <a href="#" class="read-more">Đọc Tiếp <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></a>
-          </div>
-        </div>
-        
-        <div class="blog-card">
-          <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=600&auto=format&fit=crop" alt="Cúp C1">
-          <div class="blog-content">
-            <div class="blog-date">Hôm qua, 06:30 AM</div>
-            <h3>Kết quả lượt trận Champions League: Đại diện bóng đá Anh vươn lên mạnh mẽ</h3>
-            <p>Tổng hợp từ báo: Tuổi Trẻ. Các đội bóng từ xứ sương mù đã có một đêm thi đấu thăng hoa, tạo lợi thế lớn...</p>
-            <a href="#" class="read-more">Đọc Tiếp <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></a>
-          </div>
-        </div>
-
-        <div class="blog-card">
-          <img src="https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?q=80&w=600&auto=format&fit=crop" alt="Thị trường chuyển nhượng">
-          <div class="blog-content">
-            <div class="blog-date">Hôm kia, 06:30 AM</div>
-            <h3>Bom tấn chuyển nhượng bóng đá quốc tế: Tiền đạo ngôi sao chốt bến đỗ mới</h3>
-            <p>Tổng hợp từ báo: Bóng Đá. Thương vụ làm chấn động thị trường chuyển nhượng cuối cùng đã hoàn tất khi...</p>
-            <a href="#" class="read-more">Đọc Tiếp <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></a>
-          </div>
-        </div>
+      
+      <div class="cta-buttons">
+        <a href="https://zalo.me/0934975913" target="_blank" rel="noopener" class="btn-design">
+          Gửi Yêu Cầu Thiết Kế
+        </a>
+        <a href="https://zalo.me/0934975913" target="_blank" rel="noopener" class="btn-zalo">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 4.5H3.5C2.1 4.5 1 5.6 1 7v10c0 1.4 1.1 2.5 2.5 2.5h2v3l4.5-3h10c1.4 0 2.5-1.1 2.5-2.5V7c0-1.4-1.1-2.5-2.5-2.5zM12 15.5c-2.5 0-4.5-2-4.5-4.5s2-4.5 4.5-4.5 4.5 2 4.5 4.5-2 4.5-4.5 4.5zM12 8c-1.4 0-2.5 1.1-2.5 2.5s1.1 2.5 2.5 2.5 2.5-1.1 2.5-2.5S13.4 8 12 8z"/></svg>
+          Liên Hệ Zalo
+        </a>
       </div>
     </div>
   </section>
@@ -128,9 +448,9 @@
         <div>
           <h4 class="footer-title">Liên Hệ</h4>
           <ul class="footer-links">
-            <li><a href="#">Hotline: 0934.975.913</a></li>
-            <li><a href="#">Email: mrslinh@inaodongphucmrslinh.com</a></li>
-            <li><a href="#">Zalo: 0934.975.913</a></li>
+            <li><a href="tel:0934975913">Hotline: 0934.975.913</a></li>
+            <li><a href="mailto:mrslinh@inaodongphucmrslinh.com">Email: mrslinh@inaodongphucmrslinh.com</a></li>
+            <li><a href="https://zalo.me/0934975913" target="_blank" rel="noopener">Zalo: 0934.975.913</a></li>
           </ul>
         </div>
       </div>
@@ -142,11 +462,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
-
-
