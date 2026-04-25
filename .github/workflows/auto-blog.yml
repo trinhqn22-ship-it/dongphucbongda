@@ -32,6 +32,8 @@ jobs:
           if [ -f auto-blog/requirements.txt ]; then pip install -r auto-blog/requirements.txt; fi
 
       - name: Generate daily sports news
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           cd auto-blog
           python generate_sports_news.py

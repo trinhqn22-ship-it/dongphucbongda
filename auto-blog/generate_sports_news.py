@@ -4,6 +4,11 @@ import urllib.request
 import re
 import os
 
+try:
+    import google.generativeai as genai
+except ImportError:
+    genai = None
+
 # RSS feeds from VnExpress, Tuoi Tre, Tien Phong
 RSS_FEEDS = [
     "https://vnexpress.net/rss/the-thao.rss",
@@ -39,6 +44,45 @@ def fetch_sports_news():
             print(f"Error fetching {url}: {e}")
             
     return news_items[:3] # We return top 3 combined
+
+def generate_expert_summary(news_items):
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key or not genai:
+        print("GEMINI_API_KEY not found or google-generativeai not installed. Skipping expert summary.")
+        return None
+        
+    try:
+        genai.configure(api_key=api_key)
+        model = genai.GenerativeModel('gemini-1.5-flash')
+        
+        news_text = ""
+        for i, item in enumerate(news_items):
+            news_text += f"{i+1}. {item['title']}\n{item['summary']}\n\n"
+            
+        prompt = f"""
+Bạn là một chuyên gia phân tích thể thao và bóng đá chuyên nghiệp.
+Dưới đây là các tin tức thể thao nổi bật vừa được hệ thống tự động tổng hợp:
+
+{news_text}
+
+Hãy viết một bài tóm tắt tổng hợp (khoảng 150-200 từ), dưới góc nhìn chuyên sâu của một chuyên gia thể thao. Hãy kết nối các sự kiện trên lại với nhau thành một bức tranh toàn cảnh, đưa ra nhận định, đánh giá hoặc dự đoán sắc bén của bạn.
+Văn phong cần chuyên nghiệp, lôi cuốn, mang tính định hướng và hấp dẫn người đọc đam mê bóng đá.
+Trả về văn bản thuần túy, có thể chia thành các đoạn văn ngắn, KHÔNG sử dụng markdown phức tạp.
+"""
+        response = model.generate_content(prompt)
+        if response.text:
+            expert_item = {
+                'title': '👑 Góc Nhìn Chuyên Gia: Toàn Cảnh Thể Thao Hôm Nay',
+                'link': '#',
+                'summary': response.text.replace('\n', '<br>'),
+                'image': 'https://images.unsplash.com/photo-1518605368461-1ee1252199b4?q=80&w=800&auto=format&fit=crop',
+                'published': datetime.datetime.now().strftime("%d/%m/%Y, %H:%M AM") + ' - Chuyên mục đặc biệt'
+            }
+            return expert_item
+    except Exception as e:
+        print(f"Error generating expert summary: {e}")
+    
+    return None
 
 def generate_blog_html(news_items):
     html_items = []
@@ -87,6 +131,11 @@ if __name__ == "__main__":
     print("Fetching sports news...")
     news = fetch_sports_news()
     if news:
+        # Generate expert summary
+        expert_item = generate_expert_summary(news)
+        if expert_item:
+            news.insert(0, expert_item)
+            
         html_snippets = generate_blog_html(news)
         update_file('../blog.html', html_snippets)
         print("Blog updated successfully.")
