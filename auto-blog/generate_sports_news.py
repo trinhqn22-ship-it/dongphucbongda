@@ -68,17 +68,17 @@ def update_file(filepath, new_html):
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
     
-    # We will replace the content inside <div class="blog-grid" id="blog-grid">
-    start_tag = '<div class="blog-grid" id="blog-grid">'
-    end_tag = '</div>'
+    # We will replace the content inside the markers
+    start_tag = '<!-- START BLOG LIST -->'
+    end_tag = '<!-- END BLOG LIST -->'
     
     start_idx = content.find(start_tag)
     if start_idx != -1:
-        # Find the closing matching div
+        # Find the closing matching marker
         end_idx = content.find(end_tag, start_idx)
         if end_idx != -1:
-            # We want to replace the inner content of the grid
-            new_content = content[:start_idx + len(start_tag)] + "\n" + new_html + "\n      " + content[end_idx:]
+            # We want to replace the inner content between the markers
+            new_content = content[:start_idx + len(start_tag)] + "\n" + new_html + "\n        " + content[end_idx:]
             with open(filepath, 'w', encoding='utf-8') as f:
                 f.write(new_content)
             print(f"Successfully updated {filepath}")
