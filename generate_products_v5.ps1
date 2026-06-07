@@ -126,14 +126,14 @@ foreach ($brandFolder in $brands) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mẫu áo $titleRaw | $word1 | Đồng Phục Bóng Đá</title>
   <meta name="description" content="Khám phá chi tiết mẫu áo $titleRaw. Dịch vụ $word1 chuyên nghiệp, uy tín tại các tỉnh miền Trung.">
-  <link rel="canonical" href="https://www.inaodongphucmrslinh.com/p/$fileName">
+  <link rel="canonical" href="https://dongphucbongda.inaodongphucmrslinh.com/$fileName">
   
   <!-- Open Graph / Facebook / Zalo -->
   <meta property="og:type" content="product">
   <meta property="og:title" content="Mẫu áo $titleRaw VIP - Đồng Phục Bóng Đá">
   <meta property="og:description" content="Giá chỉ từ 180.000đ. Nhấn để xem form dáng, chất liệu áo $titleRaw. Dịch vụ $word1.">
   <meta property="og:image" content="https://raw.githubusercontent.com/mrslinh2024/dongphucbongda/main/$mainImgRel">
-  <meta property="og:url" content="https://www.inaodongphucmrslinh.com/p/$fileName">
+  <meta property="og:url" content="https://dongphucbongda.inaodongphucmrslinh.com/$fileName">
   
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
@@ -341,7 +341,7 @@ $articleBody
     },
     "offers": {
       "@type": "AggregateOffer",
-      "url": "https://www.inaodongphucmrslinh.com/p/$fileName",
+      "url": "https://dongphucbongda.inaodongphucmrslinh.com/$fileName",
       "priceCurrency": "VND",
       "lowPrice": "180000",
       "highPrice": "250000",
