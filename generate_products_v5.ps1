@@ -199,6 +199,7 @@ foreach ($brandFolder in $brands) {
       <nav class="nav-links">
         <a href="index.html">Trang Chủ</a>
         <a href="index.html#san-pham" class="active">Sản Phẩm</a>
+        <a href="https://thietkeaothun3d.inaodongphucmrslinh.com/" target="_blank" rel="noopener">Thiết Kế 3D</a>
         <a href="san-bong-da-mini.html">Sân Bóng Mini 2026</a>
         <a href="blog.html">Tin Thể Thao</a>
         <a href="https://www.inaodongphucmrslinh.com/p/lien-he.html" target="_blank" rel="noopener">Liên Hệ</a>
@@ -414,7 +415,24 @@ $cardsHtml
     </div>
   </section>
 
-  
+  <!-- 3D DESIGN BANNER -->
+  <section class="section" style="border-top: 1px solid rgba(255,255,255,0.02); background: #0b0f19;">
+    <div class="container">
+      <div class="hero-content" style="background: linear-gradient(135deg, rgba(0,255,135,0.08), rgba(11,15,25,0)); padding: 60px; border-radius: 20px; border: 1px solid rgba(0,255,135,0.2); display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+        <div>
+          <span class="badge" style="background: rgba(0, 255, 135, 0.1); color: var(--primary-color); padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 15px;">Mới Ra Mắt</span>
+          <h2 style="font-size: 36px; font-weight: 800; margin-bottom: 20px; line-height: 1.3;">Tự Thiết Kế Đồng Phục<br><span style="color: var(--primary-color);">3D Online Trực Quan</span></h2>
+          <p style="color: var(--text-muted); margin-bottom: 30px; font-size: 16px; line-height: 1.8;">Trải nghiệm công cụ tự vẽ áo, thiết kế quần áo bóng đá 3D 360 độ hiện đại nhất. Chọn phối màu tùy thích, thêm logo, in ấn tên số cá nhân hóa dễ dàng trước khi đặt hàng xưởng may Quy Nhơn, Gia Lai, Đà Nẵng...</p>
+          <a href="https://thietkeaothun3d.inaodongphucmrslinh.com/" target="_blank" rel="noopener" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 10px; font-weight: 700; padding: 15px 30px; border-radius: 8px;">🎨 Trải Nghiệm Thiết Kế 3D</a>
+        </div>
+        <div style="text-align: right;">
+          <a href="https://thietkeaothun3d.inaodongphucmrslinh.com/" target="_blank" rel="noopener">
+            <img src="3d_design_ui.png" alt="Công cụ thiết kế áo 3D online" style="max-width: 100%; border-radius: 15px; box-shadow: 0 15px 40px rgba(0,255,135,0.15); border: 1px solid rgba(255,255,255,0.05); transition: 0.3s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 "@
 
     $newIndex = $indexContent.Substring(0, $sIdx) + $replacement + $indexContent.Substring($eIdx)
